@@ -15,8 +15,14 @@ public class DoctorController {
 
     @PostMapping("/addDoctor")
     public ResponseEntity addDoctor(@RequestBody Doctors doctor){
-        String saveDoctor=doctorService.addDoctor(doctor);
-        return new ResponseEntity(saveDoctor, HttpStatus.CREATED);
+        try{
+            String saveDoctor=doctorService.addDoctor(doctor);
+            return new ResponseEntity(saveDoctor, HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
     //delete an existing doctor
     @DeleteMapping("/deleteById/")

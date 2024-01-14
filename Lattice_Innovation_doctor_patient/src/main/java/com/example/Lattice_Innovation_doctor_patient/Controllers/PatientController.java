@@ -18,8 +18,13 @@ public class PatientController {
 
     @PostMapping("/addPatient")
     public ResponseEntity addPatient(@RequestBody Patients patient){
-        String savePatient=patientService.addPatient(patient);
-        return new ResponseEntity(savePatient, HttpStatus.CREATED);
+        try {
+            String savePatient = patientService.addPatient(patient);
+            return new ResponseEntity(savePatient, HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
     }
     //getting a suggested doctor
     @GetMapping("/suggestDoctor")

@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -21,7 +22,7 @@ public class Doctors {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int doctorId;
 
-    @Size(min = 3, message = "Doctor name should be at least 3 characters")
+    @Size(min=3, message = "Doctor name should be at least 3 characters")
     String doctorName;
 
     @Enumerated(EnumType.STRING)

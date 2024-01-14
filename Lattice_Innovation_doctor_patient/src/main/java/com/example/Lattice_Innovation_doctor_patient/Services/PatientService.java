@@ -3,8 +3,7 @@ package com.example.Lattice_Innovation_doctor_patient.Services;
 
 import com.example.Lattice_Innovation_doctor_patient.Enums.City;
 import com.example.Lattice_Innovation_doctor_patient.Enums.Speciality;
-import com.example.Lattice_Innovation_doctor_patient.Exceptions.DoctorNotFoundOnLocationException;
-import com.example.Lattice_Innovation_doctor_patient.Exceptions.PatientNotFoundException;
+import com.example.Lattice_Innovation_doctor_patient.Exceptions.*;
 import com.example.Lattice_Innovation_doctor_patient.Models.Doctors;
 import com.example.Lattice_Innovation_doctor_patient.Models.Patients;
 import com.example.Lattice_Innovation_doctor_patient.Repositories.DoctorRepo;
@@ -17,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.example.Lattice_Innovation_doctor_patient.Enums.Speciality.*;
+import static com.example.Lattice_Innovation_doctor_patient.Validator.Validator.*;
 
 @Service
 public class PatientService {
@@ -28,7 +28,11 @@ public class PatientService {
 
     //adding a new patient
     public String addPatient(Patients patient) {
-        patientRepo.save(patient);
+        if(!isValidNameLength(patient.getPatientName())) throw new NameSizeIsTooShortException("Doctor Name Size Is Too Short");
+        else if(!isValidPhoneNumber(patient.getPhoneNumber())) throw new PhoneNumberException("Phone Number Is Not Valid");
+        else if(!isValidEmail(patient.getEmail())) throw new EmailException("Email Is Not Valid");
+        else if(!isValidCityLength(patient.getCityName())) throw new CityNameLengthException("City Name Is Too LOng");
+        else patientRepo.save(patient);
         return "Patient save successfully";
     }
 
